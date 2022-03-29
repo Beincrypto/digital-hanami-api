@@ -1,0 +1,13 @@
+# folders
+.github/
+.husky/
+.vercel/
+.vscode/
+build/
+coverage/
+node_modules/
+
+# files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
