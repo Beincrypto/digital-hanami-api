@@ -1,0 +1,15 @@
+.github/
+.husky/
+.vscode/
+node_modules/
+test/
+.env
+.commitlintrc.json
+.editorconfig
+.eslintignore
+.eslinrc
+.prettierignore
+.prettierrc
+jest.*.ts
+LICENSE
+README.md
