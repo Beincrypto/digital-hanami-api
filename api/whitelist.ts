@@ -4,6 +4,28 @@ import { utils } from 'ethers'
 import mainLeaf from '../src/config/whitelist/mainnet.json'
 import testLeaf from '../src/config/whitelist/testnet.json'
 
+export const getMerkleRoot = async (
+  chainId: string,
+): Promise<{
+  status: number
+  root?: string
+}> => {
+  let merkleTree
+  if (chainId === '1') {
+    // mainnet
+    merkleTree = new MerkleTree(mainLeaf, utils.keccak256, { sortPairs: true })
+  } else {
+    // testnet
+    merkleTree = new MerkleTree(testLeaf, utils.keccak256, { sortPairs: true })
+  }
+  const root = merkleTree.getHexRoot();
+
+  return {
+    status: 200,
+    root,
+  }
+}
+
 export const whitelist = async (
   chainId: string,
   address: string,
@@ -40,8 +62,14 @@ export default async (req: VercelRequest, res: VercelResponse): Promise<void | V
     // Bad request
     return res.status(400).end()
   }
-  // Make process and get return data
-  const data = await whitelist(chainId, address)
+  let data
+  if (address === 'root') {
+    // get merkle tree root
+    data = await getMerkleRoot(chainId)
+  } else {
+    // get address whitelist data
+    data = await whitelist(chainId, address)
+  }
   // Send data and end connection
   res.status(data.status).send(data).end()
 }
