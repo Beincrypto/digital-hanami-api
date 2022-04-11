@@ -3,10 +3,6 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/whitelist/:chainId/:address",
-      "destination": "/api/whitelist"
-    },
-    {
       "source": "/:match*",
       "destination": "/api/:match*"
     }

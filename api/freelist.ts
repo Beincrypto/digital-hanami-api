@@ -1,10 +1,10 @@
 import { VercelRequest, VercelResponse } from '@vercel/node'
 import { MerkleTree } from 'merkletreejs'
 import { utils } from 'ethers'
-import mainLeaf from '../src/config/whitelist/mainnet.json'
-import testLeaf from '../src/config/whitelist/testnet.json'
+import mainLeaf from '../src/config/freelist/mainnet.json'
+import testLeaf from '../src/config/freelist/testnet.json'
 
-export const whitelistMerkleRoot = async (
+export const freelistMerkleRoot = async (
   chainId: string,
 ): Promise<{
   status: number
@@ -26,12 +26,12 @@ export const whitelistMerkleRoot = async (
   }
 }
 
-export const whitelist = async (
+export const freelist = async (
   chainId: string,
   address: string,
 ): Promise<{
   status: number
-  whitelisted?: boolean
+  listed?: boolean
   proof?: string[]
 }> => {
   let proof: string[] = []
@@ -48,7 +48,7 @@ export const whitelist = async (
 
   return {
     status: 200,
-    whitelisted: proof.length > 0,
+    listed: proof.length > 0,
     proof,
   }
 }
@@ -65,10 +65,10 @@ export default async (req: VercelRequest, res: VercelResponse): Promise<void | V
   let data
   if (address === 'root') {
     // get merkle tree root
-    data = await whitelistMerkleRoot(chainId)
+    data = await freelistMerkleRoot(chainId)
   } else {
-    // get address whitelist data
-    data = await whitelist(chainId, address)
+    // get address freelist data
+    data = await freelist(chainId, address)
   }
   // Send data and end connection
   res.status(data.status).send(data).end()
