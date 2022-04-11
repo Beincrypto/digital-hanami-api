@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 import mainLeaf from '../src/config/freelist/mainnet.json'
 import testLeaf from '../src/config/freelist/testnet.json'
 
-export const freelistMerkleRoot = async (
+const freelistMerkleRoot = async (
   chainId: string,
 ): Promise<{
   status: number
@@ -26,7 +26,7 @@ export const freelistMerkleRoot = async (
   }
 }
 
-export const freelist = async (
+const freelist = async (
   chainId: string,
   address: string,
 ): Promise<{

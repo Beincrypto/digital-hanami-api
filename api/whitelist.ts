@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 import mainLeaf from '../src/config/whitelist/mainnet.json'
 import testLeaf from '../src/config/whitelist/testnet.json'
 
-export const whitelistMerkleRoot = async (
+const whitelistMerkleRoot = async (
   chainId: string,
 ): Promise<{
   status: number
@@ -26,7 +26,7 @@ export const whitelistMerkleRoot = async (
   }
 }
 
-export const whitelist = async (
+const whitelist = async (
   chainId: string,
   address: string,
 ): Promise<{
